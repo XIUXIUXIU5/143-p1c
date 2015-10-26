@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 	<html>
 	<head>
 		<title>add actor's role in a movie</title>

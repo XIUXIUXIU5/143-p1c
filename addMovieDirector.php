@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 	<html>
 	<head>
 		<title>Add a director to a movie</title>

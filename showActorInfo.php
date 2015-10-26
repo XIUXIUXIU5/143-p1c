@@ -1,6 +1,5 @@
-
+<!DOCTYPE html>
 <html>
-	<html>
 	<head>
 		<title>Actor Information</title>
 		<style type="text/css">

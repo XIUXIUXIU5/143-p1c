@@ -1,5 +1,5 @@
 
-<html>
+<!DOCTYPE html>
 	<html>
 	<head>
 		<title>Movie Information</title>
