@@ -9,7 +9,7 @@
 	Add new movie: <br/>
 	<form method="get" action="<?php echo $_SERVER['PHP_SELF'];?>">
 		Title : <input type="text" name="title" maxlength="20"><br/>
-		Compnay: <input type="text" name="company" maxlength="50"><br/>
+		Company: <input type="text" name="company" maxlength="50"><br/>
 		Year : <input type="text" name="year" maxlength="4"><br/>	<!-- Todo: validation-->	
 		MPAA Rating : <select name="mpaarating">
 		<option value="G">G</option>
@@ -47,11 +47,6 @@
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-
-
-	#TODO:
-	#Add genre
-
 	$db_connection = mysql_connect("localhost:1432", "cs143", ""); 
 	mysql_select_db("CS143",$db_connection);
 
@@ -88,14 +83,54 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 		$addQuery = $addQuery . ");";
 
 $rs = mysql_query($addQuery, $db_connection);
-if ($rs) 
+if ($rs) {
 	echo "successfully added";
+
+	$genres = array($_GET['genre_Action'] ,
+		$_GET['genre_Adult'] ,
+		$_GET['genre_Adventure'] ,
+		$_GET['genre_Animation'] ,
+		$_GET['genre_Comedy'] ,
+		$_GET['genre_Crime'] ,
+		$_GET['genre_Documentary'] ,
+		$_GET['genre_Drama'] ,
+		$_GET['genre_Family'] ,
+		$_GET['genre_Fantasy'] ,
+		$_GET['genre_Horror'],
+		$_GET['genre_Musical'],
+		$_GET['genre_Mystery'],
+		$_GET['genre_Romance'],
+		$_GET['genre_Sci-Fi'],
+		$_GET['genre_Short'],
+		$_GET['genre_Thriller'],
+		$_GET['genre_War'],
+		$_GET['genre_Western'],);
+	var_dump($genres);
+
+	$genreQueries = array();
+	for ($i=0; $i < count($genres); $i++) { 
+		if($genres[$i] != "")
+		{
+			$query = "INSERT INTO MovieGenre(mid, genre) VALUES ( '" . $newID . "'," . "'". $genres[$i] . "');";
+			array_push($genreQueries,$query);
+		}
+	}
+
+	var_dump($genreQueries);
+
+	for ($i=0; $i < count($genreQueries); $i++) { 
+		$rs = mysql_query($genreQueries[$i],$db_connection);
+	}
+}
 else {
 	echo "failed to add";
 		#revert max id if failed
 	$updateIDQuery = "UPDATE MaxMovieID SET id = " . strval($newID-1) . " WHERE id = " . strval($newID) . ";";
 	$rs = mysql_query($updateIDQuery, $db_connection);
 }
+
+
+
 mysql_free_result($rs);
 mysql_close($db_connection);
 }
