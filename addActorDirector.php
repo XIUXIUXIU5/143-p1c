@@ -7,7 +7,7 @@
 	</head>	
 	<body bgcolor="#FFFFAA">
 				Add new actor/director: <br/>
-		<form action="./addActorDirector.php" method="GET">
+		<form method="get" action="<?php echo $_SERVER['PHP_SELF'];?>">
 			Identity:	<input type="radio" name="identity" value="Actor" checked="true">Actor
 						<input type="radio" name="identity" value="Director">Director<br/>
 			<hr/>
@@ -21,6 +21,90 @@
 			<input type="submit" value="add it!!"/>
 		</form>
 		<hr/>
+
+	<?php
+   	if ($_SERVER["REQUEST_METHOD"] == "GET") {
+
+	$db_connection = mysql_connect("localhost:1432", "cs143", ""); 
+	mysql_select_db("CS143",$db_connection);
+    $rs = mysql_query("SELECT id FROM MaxPersonID;",$db_connection);
+	$row = mysql_fetch_row($rs);
+
+	$newID = intval($row[0])+1;
+	var_dump($newID);
+
+	$updateIDQuery = "UPDATE MaxPersonID SET id = " . strval($newID) . " WHERE id = " . strval($newID-1) . ";";
+
+	var_dump($updateIDQuery);
+
+	$rs = mysql_query($updateIDQuery, $db_connection);
+
+	if (!$rs) {
+		echo "fail to create id";
+	}
+	$identity = $_GET['identity'];
+	$attributes = array(strval($newID),$_GET['first'],$_GET['last'],$_GET['sex'],$_GET['dob'],$_GET['dod']);
+    var_dump($attributes);
+
+    for ($i=0; $i < count($attributes); $i++) { 
+    	if(($attributes[$i]) == "")
+    	{
+    		$attributes[$i] = "NULL";
+    	}
+    }
+
+    var_dump($attributes);
+
+    $addQuery = "";
+	if($identity == "Actor"){
+		$addQuery = "INSERT INTO Actor (id, last, first, sex, dob, dod) VALUES (";
+		for ($i=0; $i < count($attributes); $i++) { 
+			$addQuery = $addQuery ."'". $attributes[$i] . "'";
+			if ($i < count($attributes) - 1) {
+				$addQuery = $addQuery . ",";
+			}
+		}
+		$addQuery = $addQuery . ");";
+	}
+	else if($identity == "Director")
+	{
+		$addQuery = "INSERT INTO Actor (id, last, first, sex, dob, dod) VALUES (";
+		for ($i=0; $i < count($attributes); $i++) { 
+			if ($i != 3) {
+				$addQuery = $addQuery ."'". $attributes[$i] . "'";
+				if ($i < count($attributes) - 1) {
+					$addQuery = $addQuery . ",";
+				}			
+			}
+		}
+		$addQuery = $addQuery . ");";
+	}
+
+	var_dump($addQuery);
+
+	$rs = mysql_query($addQuery, $db_connection);
+
+	if ($rs) 
+		echo "successfully added";
+	else
+	{
+		echo "failed to add";
+		$updateIDQuery = "UPDATE MaxPersonID SET id = " . strval($newID-1) . " WHERE id = " . strval($newID) . ";";
+
+		var_dump($updateIDQuery);
+
+		$rs = mysql_query($updateIDQuery, $db_connection);
+
+	}
+
+	var_dump($rs);
+    mysql_free_result($rs);
+    mysql_close($db_connection);
+
+
+
+	}
+	?>
 				
 	</body>
 </html>
