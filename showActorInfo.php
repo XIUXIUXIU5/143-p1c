@@ -7,8 +7,63 @@
 	</head>	
 	<body bgcolor="#FFFFAA">
 				
-		-- Show Actor Info -- <br/>Name: Julia Roberts<br/>Sex: Female<br/>Date Of Birth: 1967-10-28<br/>Date Of Death: --Still Alive--<br/><br/>-- Act in -- <br/>Act "Erin Brockovich" in <a href = "./showMovieInfo.php?mid=1274">Erin Brockovich</a><br/>Act "Von" in <a href = "./showMovieInfo.php?mid=1317">Everyone Says I Love You</a><br/>Act "Kathleen 'Kiki' Harrison" in <a href = "./showMovieInfo.php?mid=136">Americas Sweethearts</a><br/>Act "Catherine/Francesca" in <a href = "./showMovieInfo.php?mid=1565">Full Frontal</a><br/>Act "Mary Reilly" in <a href = "./showMovieInfo.php?mid=2616">Mary Reilly</a><br/>Act "Samantha Barzel" in <a href = "./showMovieInfo.php?mid=2688">Mexican, The</a><br/>Act "Julianne 'Jules' Potter" in <a href = "./showMovieInfo.php?mid=2831">My Best Friends Wedding</a><br/>Act "Anna Scott" in <a href = "./showMovieInfo.php?mid=2966">Notting Hill</a><br/>Act "Tess Ocean" in <a href = "./showMovieInfo.php?mid=2983">Oceans Eleven</a><br/>Act "Maggie Carpenter" in <a href = "./showMovieInfo.php?mid=3537">Runaway Bride</a><br/>Act "Grace" in <a href = "./showMovieInfo.php?mid=3856">Something to Talk About</a><br/>Act "Isabel Kelly" in <a href = "./showMovieInfo.php?mid=3963">Stepmom</a><br/>Act "Alice Sutton" in <a href = "./showMovieInfo.php?mid=812">Conspiracy Theory</a><br/>Act "Vivian" in <a href = "./showMovieInfo.php?mid=4757">Pretty Woman</a><br/><hr/>		
-		<!-- search box -->
+	<?php
+	if ($_SERVER["REQUEST_METHOD"] == "GET") {
+		$keyword = $_GET['keyword'];
+		$db_connection = mysql_connect("localhost:1432", "cs143", ""); 
+		mysql_select_db("CS143",$db_connection);
+
+		echo "-- Show Actor Info -- ";
+		echo "<br>";
+
+		$actorInfoQuery = "SELECT * FROM Actor WHERE id = '".$_GET['aid']."';";
+
+		$rs = mysql_query($actorInfoQuery,$db_connection);
+		$row = mysql_fetch_array($rs);
+		$name = "Name : ".$row[2]." ".$row[1];
+		$sex = "Sex: ".$row[3];
+		$dob = "Date of Birth: ".$row[4];
+		$dod = "Date of Death: ".$row[5];
+		if($row[5] == "")
+		{
+			$dod = "Date Of Death: --Still Alive--";
+		}
+		echo $name;
+		echo "<br/>";
+		 		echo $sex;
+		echo "<br/>";
+				echo $dob;
+		echo "<br/>";
+				echo $dod;
+		echo "<br/>";
+
+		#Act In
+				echo "<br/>";
+
+		echo "-- Act in -- ";
+		echo "<br/>";
+
+		$actinQuery = "SELECT * FROM MovieActor WHERE aid = '".$_GET['aid']."';";
+		$rs = mysql_query($actinQuery,$db_connection);
+		while ($row = mysql_fetch_array($rs)) {
+			echo "Act \"".$row[2]."\" in ";
+			$movieQuery = "SELECT * FROM Movie WHERE id = '".$row[0]."';";
+			$subrs = mysql_query($movieQuery,$db_connection);
+			$subrow = mysql_fetch_array($subrs);
+			$text = $subrow[1]."(".$subrow[2] . ")";
+			echo "<a href='showMovieInfo.php?aid=".$subrow[0]."'>".$text."</a>";
+			echo "<br/>";
+			mysql_free_result($subrs);
+		}
+
+		mysql_free_result($rs);
+		mysql_close($db_connection);
+
+	}
+	?>
+	<br/>
+				<hr/>
+
                 Search for other actors/movies <form action="./search.php" method="GET">
                         Search: <input type="text" name="keyword"></input>
                         <input type="submit" value="Search"/>
