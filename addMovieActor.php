@@ -7,16 +7,45 @@
 	</head>	
 	<body bgcolor="#FFFFAA">
 				Add new actor in a movie: <br/>
-		<form action="./addMovieActor.php" method="GET">
-					
-			
-			Movie : <select name="mid">
+<form method="get" action="<?php echo $_SERVER['PHP_SELF'];?>">
+		<?php
+		$db_connection = mysql_connect("localhost:1432", "cs143", ""); 
+		mysql_select_db("CS143",$db_connection);
 
-					</select>
-			<br/>		
-			Actor : <select name="aid">
-					</select>
-			<br/>	
+		$rs = mysql_query("SELECT * FROM Movie;",$db_connection);
+
+		echo "Movie : <select name=mid>";
+		while ($row = mysql_fetch_array($rs)) {
+			echo "<option value='" . $row['0'] . "'>" . $row[1] . "(" . $row[2] . ")" . "</option>";
+		}
+		echo "</select>";
+
+		mysql_free_result($rs);
+		mysql_close($db_connection);
+
+		?>		
+
+		<br/>		
+		
+		<?php
+		$db_connection = mysql_connect("localhost:1432", "cs143", ""); 
+		mysql_select_db("CS143",$db_connection);
+
+		$rs = mysql_query("SELECT * FROM Actor ORDER BY first ASC;",$db_connection);
+
+		echo "Actor : <select name=aid>";
+		while ($row = mysql_fetch_array($rs)) {
+			echo "<option value='" . $row['0'] . "'>" . $row[2] . " ". $row[1] . "(" . $row[4] . ")" . "</option>";
+		}
+		echo "</select>";
+
+		mysql_free_result($rs);
+		mysql_close($db_connection);
+
+		?>		
+	</select>
+	<br/>	
+
 			Role: <input type="text" name="role" maxlength="50">
 			<br/>
 			

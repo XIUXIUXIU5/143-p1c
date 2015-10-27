@@ -31,11 +31,11 @@
 		$db_connection = mysql_connect("localhost:1432", "cs143", ""); 
 		mysql_select_db("CS143",$db_connection);
 
-		$rs = mysql_query("SELECT * FROM Director;",$db_connection);
+		$rs = mysql_query("SELECT * FROM Director ORDER BY first ASC;",$db_connection);
 
 		echo "Director : <select name=did>";
 		while ($row = mysql_fetch_array($rs)) {
-			echo "<option value='" . $row['0'] . "'>" . $row[1] . $row[2] . "(" . $row[3] . ")" . "</option>";
+			echo "<option value='" . $row['0'] . "'>" . $row[2] ." ". $row[1] . "(" . $row[3] . ")" . "</option>";
 		}
 		echo "</select>";
 
