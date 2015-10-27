@@ -24,7 +24,6 @@
 		</form>
 	<hr/>
 
-
 	<?php
    	if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
@@ -43,7 +42,6 @@
 
 	#Get All the attributes
 	$attributes = array(strval($newID),$_GET['title'],$_GET['year'],$_GET['mpaarating'],$_GET['company']);
-	var_dump($attributes);
 
     #Set Empty String to NULL & add ' to each attribute
     for ($i=0; $i < count($attributes); $i++) { 
@@ -63,8 +61,6 @@
 		}
 	}
 	$addQuery = $addQuery . ");";
-	
-	var_dump($addQuery);
 	
 	$rs = mysql_query($addQuery, $db_connection);
 	if ($rs) 
