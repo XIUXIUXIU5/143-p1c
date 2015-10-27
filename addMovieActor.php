@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-	<html>
-	<head>
-		<title>add actor's role in a movie</title>
-		<style type="text/css">
-		</style>
-	</head>	
-	<body bgcolor="#FFFFAA">
-				Add new actor in a movie: <br/>
-<form method="get" action="<?php echo $_SERVER['PHP_SELF'];?>">
+<html>
+<head>
+	<title>add actor's role in a movie</title>
+	<style type="text/css">
+	</style>
+</head>	
+<body bgcolor="#FFFFAA">
+	Add new actor in a movie: <br/>
+	<form method="get" action="<?php echo $_SERVER['PHP_SELF'];?>">
 		<?php
 		$db_connection = mysql_connect("localhost:1432", "cs143", ""); 
 		mysql_select_db("CS143",$db_connection);
@@ -46,12 +46,37 @@
 	</select>
 	<br/>	
 
-			Role: <input type="text" name="role" maxlength="50">
-			<br/>
-			
-			<input type="submit" value="Add it!!"/>
-					</form>
-		<hr/>
-				
-	</body>
+	Role: <input type="text" name="role" maxlength="50">
+	<br/>
+	
+	<input type="submit" value="Add it!!"/>
+</form>
+<hr/>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+
+	$db_connection = mysql_connect("localhost:1432", "cs143", ""); 
+	mysql_select_db("CS143",$db_connection);
+
+	$checkQuery = "SELECT * FROM MovieActor WHERE mid = '" . $_GET['mid'] . "' AND aid = '" . $_GET['aid']."' AND role = '".$_GET['role']."';";
+	$rs = mysql_query($checkQuery, $db_connection);
+	$row = mysql_fetch_array($rs);
+	if($row)
+		echo "This relationship has been added already";
+	else {
+		$addQuery = "INSERT INTO MovieActor(mid, aid, role) VALUES (" . "'" . $_GET['mid'] ."','".$_GET['aid']."','" . $_GET['role']. "');";
+		$rs = mysql_query($addQuery, $db_connection);
+		if ($rs) 
+			echo "successfully added";
+		else {
+			echo "failed to add";
+		}
+	}
+	mysql_free_result($rs);
+	mysql_close($db_connection);
+}
+?>
+
+</body>
 </html>
