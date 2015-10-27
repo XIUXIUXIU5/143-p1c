@@ -27,51 +27,49 @@
 
 	$db_connection = mysql_connect("localhost:1432", "cs143", ""); 
 	mysql_select_db("CS143",$db_connection);
+
+	#Get MaxID First
     $rs = mysql_query("SELECT id FROM MaxPersonID;",$db_connection);
 	$row = mysql_fetch_row($rs);
-
 	$newID = intval($row[0])+1;
-	var_dump($newID);
-
 	$updateIDQuery = "UPDATE MaxPersonID SET id = " . strval($newID) . " WHERE id = " . strval($newID-1) . ";";
-
-	var_dump($updateIDQuery);
-
 	$rs = mysql_query($updateIDQuery, $db_connection);
-
 	if (!$rs) {
 		echo "fail to create id";
 	}
+
+	#Get All the attributes
 	$identity = $_GET['identity'];
 	$attributes = array(strval($newID),$_GET['first'],$_GET['last'],$_GET['sex'],$_GET['dob'],$_GET['dod']);
-    var_dump($attributes);
 
+    #Set Empty String to NULL & add ' to each attribute
     for ($i=0; $i < count($attributes); $i++) { 
-    	if(($attributes[$i]) == "")
-    	{
+    	if(($attributes[$i]) == "") {
     		$attributes[$i] = "NULL";
     	}
+    	else 
+    		$attributes[$i] = "'" . $attributes[$i] . "'";
     }
 
-    var_dump($attributes);
-
+    #Create Query
     $addQuery = "";
-	if($identity == "Actor"){
+	if($identity == "Actor") {
 		$addQuery = "INSERT INTO Actor (id, last, first, sex, dob, dod) VALUES (";
 		for ($i=0; $i < count($attributes); $i++) { 
-			$addQuery = $addQuery ."'". $attributes[$i] . "'";
+			$addQuery = $addQuery . $attributes[$i];
 			if ($i < count($attributes) - 1) {
 				$addQuery = $addQuery . ",";
 			}
 		}
 		$addQuery = $addQuery . ");";
 	}
-	else if($identity == "Director")
-	{
-		$addQuery = "INSERT INTO Actor (id, last, first, sex, dob, dod) VALUES (";
+
+	else if($identity == "Director") {
+		$addQuery = "INSERT INTO Director (id, last, first, dob, dod) VALUES (";
 		for ($i=0; $i < count($attributes); $i++) { 
-			if ($i != 3) {
-				$addQuery = $addQuery ."'". $attributes[$i] . "'";
+			if ($i != 3) #get rid of sex attribute
+			{
+				$addQuery = $addQuery . $attributes[$i];
 				if ($i < count($attributes) - 1) {
 					$addQuery = $addQuery . ",";
 				}			
@@ -80,29 +78,17 @@
 		$addQuery = $addQuery . ");";
 	}
 
-	var_dump($addQuery);
-
 	$rs = mysql_query($addQuery, $db_connection);
-
 	if ($rs) 
 		echo "successfully added";
-	else
-	{
+	else {
 		echo "failed to add";
+		#revert max id if failed
 		$updateIDQuery = "UPDATE MaxPersonID SET id = " . strval($newID-1) . " WHERE id = " . strval($newID) . ";";
-
-		var_dump($updateIDQuery);
-
 		$rs = mysql_query($updateIDQuery, $db_connection);
-
 	}
-
-	var_dump($rs);
     mysql_free_result($rs);
     mysql_close($db_connection);
-
-
-
 	}
 	?>
 				
