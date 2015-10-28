@@ -48,7 +48,7 @@
 		while ($row = mysql_fetch_array($rs)) {
 			echo "Movie: ";
 			$text = $row[1]."(".$row[2] . ")";
-			echo "<a href='showMovieInfo.php?aid=".$row[0]."'>".$text."</a>";
+			echo "<a href='showMovieInfo.php?mid=".$row[0]."'>".$text."</a>";
 			echo "<br/>";
 		}
 
