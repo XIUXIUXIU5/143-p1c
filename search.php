@@ -26,7 +26,7 @@
 		echo "Searching match records in Actor database ... ";
 		echo "<br>";
 
-		$actorQuery = "SELECT * FROM Actor WHERE first LIKE '%". $keyword."%' OR last LIKE '%".$keyword."%';";
+		$actorQuery = "SELECT * FROM Actor ORDER BY first ASC WHERE first LIKE '%". $keyword."%' OR last LIKE '%".$keyword."%';";
 
 		$rs = mysql_query($actorQuery,$db_connection);
 
@@ -40,7 +40,7 @@
 		echo "<br/>";
 		echo "Searching match records in Movie database ... ";
 
-		$movieQuery = "SELECT * FROM Movie WHERE title LIKE '%". $keyword."%';";
+		$movieQuery = "SELECT * FROM Movie ORDER BY first ASC WHERE title LIKE '%". $keyword."%';";
 		echo "<br>";
 
 		$rs = mysql_query($movieQuery,$db_connection);
