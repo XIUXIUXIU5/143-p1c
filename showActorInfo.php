@@ -43,7 +43,7 @@
 		echo "-- Act in -- ";
 		echo "<br/>";
 
-		$actinQuery = "SELECT * FROM MovieActor WHERE aid = '".$_GET['aid']."';";
+		$actinQuery = "SELECT DISTINCT * FROM MovieActor WHERE aid = '".$_GET['aid']."';";
 		$rs = mysql_query($actinQuery,$db_connection);
 		while ($row = mysql_fetch_array($rs)) {
 			echo "Act \"".$row[2]."\" in ";
@@ -51,7 +51,7 @@
 			$subrs = mysql_query($movieQuery,$db_connection);
 			$subrow = mysql_fetch_array($subrs);
 			$text = $subrow[1]."(".$subrow[2] . ")";
-			echo "<a href='showMovieInfo.php?aid=".$subrow[0]."'>".$text."</a>";
+			echo "<a href='showMovieInfo.php?mid=".$subrow[0]."'>".$text."</a>";
 			echo "<br/>";
 			mysql_free_result($subrs);
 		}
