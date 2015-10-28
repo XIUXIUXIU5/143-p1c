@@ -105,7 +105,6 @@ if ($rs) {
 		$_GET['genre_Thriller'],
 		$_GET['genre_War'],
 		$_GET['genre_Western'],);
-	var_dump($genres);
 
 	$genreQueries = array();
 	for ($i=0; $i < count($genres); $i++) { 
