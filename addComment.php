@@ -49,8 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && !is_null($_GET['yourname'])) {
 	$addComment = "INSERT INTO Review(name, time, mid, rating, comment) VALUES ('".$_GET['yourname']."','".$today."','".$_GET['mid']."','".$_GET['rating']."','".$_GET['comment']."');";
 	$rs = mysql_query($addComment, $db_connection);
 
-		if ($rs) 
-			echo "successfully added";
+		if ($rs) {
+		echo "<font color='Red'><b>Thanks your comment!! We appreciate it!!</b></font><br/><a href = './showMovieInfo.php?mid= ".$_GET['mid']."'>See Movie Info (including others' reviews)</a><hr/>	";	
+		}
 		else {
 			echo "failed to add";
 		}
