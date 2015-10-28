@@ -96,14 +96,24 @@
 	$rs = mysql_query($ratingQuery,$db_connection);
 	$row = mysql_fetch_array($rs);
 	if($row[1] > 0)
-		echo "Average Score: " .$row[0]. "/5 (5.0 is best) by ".$row[1]. "reviews(s)";
+		echo "Average Score: " .$row[0]. "/5 (5.0 is best) by ".$row[1]. " review(s)";
 	else
 		echo "Average Score: (Sorry, none review this movie)";
 
 	echo "<a href='addComment.php?mid=".$_GET['mid']."'> Add your review now!! </a>";
 	echo "<br/>";
+
+	#Detailed comment
 	echo "All Comments in Details:";
 	echo "<br/>";
+	$commentQuery = "SELECT * FROM Review WHERE mid = '".$_GET['mid'] . "';";
+	$rs = mysql_query($commentQuery,$db_connection);
+	while ($row = mysql_fetch_array($rs)) {
+		echo "<font color='Blue'>";	
+		echo "In ".$row[1].", <font color='Red'>".$row[0]."</font> said: I rate this move score <font color='Red'>".$row[3]."</font> point(s), here is my comment. </font><br/>".$row[4]."<br/><br/>";	
+	}
+
+
 
 
 		mysql_free_result($rs);
