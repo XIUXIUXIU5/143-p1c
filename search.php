@@ -8,13 +8,13 @@
 <body bgcolor="#FFFFAA">
 
 	Search for actors/movies
-	<form method="get" action="<?php echo $_SERVER['PHP_SELF'];?>">
+		<form action="./search.php" method="GET">		
 		Search: <input type="text" name="keyword"></input>
 		<input type="submit" value="Search"/>
 	</form>
 	<hr/>
 	<?php
-	if ($_SERVER["REQUEST_METHOD"] == "GET") {
+	if ($_SERVER["REQUEST_METHOD"] == "GET" && !is_null($_GET['keyword'])) {
 		$keyword = $_GET['keyword'];
 		$db_connection = mysql_connect("localhost:1432", "cs143", ""); 
 		mysql_select_db("CS143",$db_connection);

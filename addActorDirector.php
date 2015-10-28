@@ -15,7 +15,7 @@
 		Last Name:	<input type="text" name="last" maxlength="20"><br/>
 		Sex:		<input type="radio" name="sex" value="Male" checked="true">Male
 		<input type="radio" name="sex" value="Female">Female<br/>
-		
+
 		Date of Birth:	<input type="text" name="dob"><br/>
 		Date of Die:	<input type="text" name="dod"> (leave blank if alive now)<br/>
 		<input type="submit" value="add it!!"/>
@@ -23,7 +23,7 @@
 	<hr/>
 
 	<?php
-	if ($_SERVER["REQUEST_METHOD"] == "GET") {
+	if ($_SERVER["REQUEST_METHOD"] == "GET" && !is_null($_GET['identity'])) {
 
 		$db_connection = mysql_connect("localhost:1432", "cs143", ""); 
 		mysql_select_db("CS143",$db_connection);

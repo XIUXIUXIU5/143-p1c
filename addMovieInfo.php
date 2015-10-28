@@ -46,7 +46,7 @@
 <hr/>
 
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
+if ($_SERVER["REQUEST_METHOD"] == "GET" && !is_null($_GET['title'])) {
 	$db_connection = mysql_connect("localhost:1432", "cs143", ""); 
 	mysql_select_db("CS143",$db_connection);
 
