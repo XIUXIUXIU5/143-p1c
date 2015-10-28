@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Actor Information</title>
-		<style type="text/css">
-		</style>
-	</head>	
-	<body bgcolor="#FFFFAA">
-				
+<head>
+	<title>Actor Information</title>
+	<style type="text/css">
+	</style>
+</head>	
+<body bgcolor="#FFFFAA">
+	
 	<?php
 	if ($_SERVER["REQUEST_METHOD"] == "GET") {
 		$keyword = $_GET['keyword'];
@@ -30,15 +30,15 @@
 		}
 		echo $name;
 		echo "<br/>";
-		 		echo $sex;
+		echo $sex;
 		echo "<br/>";
-				echo $dob;
+		echo $dob;
 		echo "<br/>";
-				echo $dod;
+		echo $dod;
 		echo "<br/>";
 
 		#Act In
-				echo "<br/>";
+		echo "<br/>";
 
 		echo "-- Act in -- ";
 		echo "<br/>";
@@ -62,12 +62,12 @@
 	}
 	?>
 	<br/>
-				<hr/>
+	<hr/>
 
-                Search for other actors/movies <form action="./search.php" method="GET">
-                        Search: <input type="text" name="keyword"></input>
-                        <input type="submit" value="Search"/>
-                </form>
+	Search for other actors/movies <form action="./search.php" method="GET">
+	Search: <input type="text" name="keyword"></input>
+	<input type="submit" value="Search"/>
+</form>
 
-			</body>
+</body>
 </html>
