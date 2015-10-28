@@ -20,7 +20,7 @@
 
 		$rs = mysql_query($actorInfoQuery,$db_connection);
 		$row = mysql_fetch_array($rs);
-		$name = "Name : ".$row[2]." ".$row[1];
+		$name = "Name: ".$row[2]." ".$row[1];
 		$sex = "Sex: ".$row[3];
 		$dob = "Date of Birth: ".$row[4];
 		$dod = "Date of Death: ".$row[5];
