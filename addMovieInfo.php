@@ -123,7 +123,9 @@ if ($rs) {
 }
 else {
 	echo "failed to add";
-		#revert max id if failed
+	echo "<br/>";
+	echo mysql_error();
+	#revert max id if failed
 	$updateIDQuery = "UPDATE MaxMovieID SET id = " . strval($newID-1) . " WHERE id = " . strval($newID) . ";";
 	$rs = mysql_query($updateIDQuery, $db_connection);
 }

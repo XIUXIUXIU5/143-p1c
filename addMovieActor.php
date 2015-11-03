@@ -70,7 +70,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && !is_null($_GET['mid'])) {
 		if ($rs) 
 			echo "successfully added";
 		else {
-			echo "failed to add";
+			echo "failed to add\n";
+			echo "<br/>";
+			echo mysql_error();
 		}
 	}
 	mysql_free_result($rs);
