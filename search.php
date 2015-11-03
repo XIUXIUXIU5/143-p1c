@@ -29,7 +29,7 @@
 
 		////$actorQuery = "SELECT * FROM Actor ORDER BY first ASC WHERE first LIKE '%". $keyword."%' OR last LIKE '%".$keyword."%';";
 		//$pos ==strpos($keyword, " ");
-		$pieces = explode(" ", $keyword);
+		/*$pieces = explode(" ", $keyword);
 		if ($pieces[0] == $keyword)
 		{	
 			//echo "no space";
@@ -39,7 +39,11 @@
 		{
 			//echo "space";
 			$actorQuery = "SELECT * FROM Actor WHERE first LIKE '%".$pieces[0]."%' AND last LIKE '%".$pieces[1]."%' ORDER BY first ASC ;";
-		}
+		}*/
+
+		//$keyword = str_replace(' ', '', $keyword);
+		$actorQuery = "SELECT * FROM Actor A WHERE CONCAT(first,last) LIKE '%".$keyword."%' ORDER BY first ASC ;";
+
 		$rs = mysql_query($actorQuery,$db_connection);
 
 		while ($row = mysql_fetch_array($rs)) {
