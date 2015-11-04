@@ -61,7 +61,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && !is_null($_GET['title'])) {
 	}
 
 	#Get All the attributes
-	$attributes = array(strval($newID),$_GET['title'],$_GET['year'],$_GET['mpaarating'],$_GET['company']);
+	$_title = mysql_real_escape_string($_GET['title']);
+	$_company = mysql_real_escape_string($_GET['company']);
+
+	$attributes = array(strval($newID),$_title,$_GET['year'],$_GET['mpaarating'],$_company);
 
     #Set Empty String to NULL & add ' to each attribute
 	for ($i=0; $i < count($attributes); $i++) { 
@@ -115,7 +118,7 @@ if ($rs) {
 		}
 	}
 
-	var_dump($genreQueries);
+	//var_dump($genreQueries);
 
 	for ($i=0; $i < count($genreQueries); $i++) { 
 		$rs = mysql_query($genreQueries[$i],$db_connection);

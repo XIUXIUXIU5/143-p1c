@@ -19,6 +19,7 @@
 		$db_connection = mysql_connect("localhost:1432", "cs143", ""); 
 		mysql_select_db("CS143",$db_connection);
 
+		
 		echo "You are searching [".$keyword."] results...";
 		echo "<br>";
 		echo "<br>";
@@ -26,23 +27,8 @@
 		echo "Searching match records in Actor database ... ";
 		echo "<br>";
 
-
-		////$actorQuery = "SELECT * FROM Actor ORDER BY first ASC WHERE first LIKE '%". $keyword."%' OR last LIKE '%".$keyword."%';";
-		//$pos ==strpos($keyword, " ");
-		/*$pieces = explode(" ", $keyword);
-		if ($pieces[0] == $keyword)
-		{	
-			//echo "no space";
-			$actorQuery = "SELECT * FROM Actor WHERE first LIKE '%".$keyword."%' OR last LIKE '%".$keyword."%' ORDER BY first ASC ;";
-		}
-		else
-		{
-			//echo "space";
-			$actorQuery = "SELECT * FROM Actor WHERE first LIKE '%".$pieces[0]."%' AND last LIKE '%".$pieces[1]."%' ORDER BY first ASC ;";
-		}*/
-
-		//$keyword = str_replace(' ', '', $keyword);
-		$actorQuery = "SELECT * FROM Actor A WHERE CONCAT(first,last) LIKE '%".$keyword."%' ORDER BY first ASC ;";
+		$_keyword = mysql_real_escape_string($keyword);
+		$actorQuery = "SELECT * FROM Actor A WHERE CONCAT(first,' ',last) LIKE '%".$_keyword."%' ORDER BY first ASC ;";
 
 		$rs = mysql_query($actorQuery,$db_connection);
 
@@ -56,8 +42,8 @@
 		echo "<br/>";
 		echo "Searching match records in Movie database ... ";
 
-		//echo $keyword;
-		$movieQuery = "SELECT * FROM Movie WHERE title LIKE '%". $keyword."%' ORDER BY title ASC";
+		
+		$movieQuery = "SELECT * FROM Movie WHERE title LIKE '%". $_keyword."%' ORDER BY title ASC";
 		echo "<br>";
 
 		$rs = mysql_query($movieQuery,$db_connection);

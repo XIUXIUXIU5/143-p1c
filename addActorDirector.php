@@ -40,7 +40,9 @@
 
 	#Get All the attributes
 		$identity = $_GET['identity'];
-		$attributes = array(strval($newID),$_GET['last'],$_GET['first'],$_GET['sex'],$_GET['dob'],$_GET['dod']);
+		$_first = mysql_real_escape_string($_GET['first']);
+		$_last = mysql_real_escape_string($_GET['last']);
+		$attributes = array(strval($newID),$_last,$_first,$_GET['sex'],$_GET['dob'],$_GET['dod']);
 
     #Set Empty String to NULL & add ' to each attribute
 		for ($i=0; $i < count($attributes); $i++) { 
